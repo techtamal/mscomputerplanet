@@ -1,0 +1,21 @@
+# robots.txt for M/S COMPUTER PLANET
+# Website: https://www.mscomputerplanet.com/
+
+User-agent: *
+Allow: /
+Allow: /images/
+Allow: /hardware-maintenance-amc-silchar/
+Allow: /banking-corporate-it-support-silchar/
+Allow: /network-software-support-silchar/
+Allow: /blog/
+
+# Disallow internal operational ERP & admin pipelines
+Disallow: /erp/
+Disallow: /leads-admin.html
+Disallow: /portal-login.html
+
+# Crawl Delay
+Crawl-delay: 1
+
+# Sitemap Location
+Sitemap: https://www.mscomputerplanet.com/sitemap.xml

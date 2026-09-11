@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M/S Computer Planet · Staff Login</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/erp.css">
+</head>
+<body class="erp-body" style="justify-content:center; align-items:center;">
+  <div class="erp-gate-box" style="margin:40px auto;">
+    <img src="images/official-logo.png" alt="Computer Planet Official Logo" class="erp-gate-logo" style="height:76px; background:#ffffff; padding:4px; border-radius:12px; margin-bottom:16px;">
+    <h2>Operations Staff Portal</h2>
+    <p class="subtitle">Direct Emergency Authentication Gateway</p>
+
+    <form onsubmit="handleDirectLogin(event)">
+      <div class="form-group" style="text-align:left; margin-bottom:20px;">
+        <label class="form-label">Staff Security PIN</label>
+        <input type="password" id="directPin" class="form-control" style="text-align:center; font-size:1.4rem; letter-spacing:6px; font-weight:bold;" maxlength="4" placeholder="••••" required autofocus>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%; padding:14px;">
+        🚀 Unlock Operations ERP
+      </button>
+      <div id="loginErr" style="color:var(--danger); font-size:0.85rem; margin-top:12px;"></div>
+    </form>
+
+    <div style="margin-top:25px; border-top:1px solid rgba(255,255,255,0.1); padding-top:16px;">
+      <a href="index.html" style="color:var(--text-light-muted); font-size:0.84rem;">&larr; Return to Public Website</a>
+    </div>
+  </div>
+
+  <script>
+    function handleDirectLogin(e) {
+      e.preventDefault();
+      const pin = document.getElementById('directPin').value;
+      if (pin === '1088') {
+        sessionStorage.setItem('cp_erp_authenticated', 'true');
+        window.location.href = 'erp/';
+      } else {
+        document.getElementById('loginErr').textContent = '❌ Invalid PIN. Please try again.';
+      }
+    }
+  </script>
+</body>
+</html>

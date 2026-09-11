@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.mscomputerplanet.com/</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.mscomputerplanet.com/images/logo.svg</image:loc>
+      <image:title>M/S Computer Planet IT Sales and Support Logo</image:title>
+    </image:image>
+  </url>
+
+  <!-- Hardware Maintenance & AMC -->
+  <url>
+    <loc>https://www.mscomputerplanet.com/hardware-maintenance-amc-silchar/</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Banking & Corporate IT Support -->
+  <url>
+    <loc>https://www.mscomputerplanet.com/banking-corporate-it-support-silchar/</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Networking & Software Support -->
+  <url>
+    <loc>https://www.mscomputerplanet.com/network-software-support-silchar/</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Photo Gallery -->
+  <url>
+    <loc>https://www.mscomputerplanet.com/gallery/</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Blog & IT Knowledgebase -->
+  <url>
+    <loc>https://www.mscomputerplanet.com/blog/</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

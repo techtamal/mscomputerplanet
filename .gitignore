@@ -1,0 +1,11 @@
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.exe
+*.zip
+.vscode/
+.idea/
+scratch/
+node_modules/
+

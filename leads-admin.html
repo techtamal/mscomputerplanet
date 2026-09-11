@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M/S Computer Planet · Service Tickets &amp; Leads CRM</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/erp.css">
+</head>
+<body class="erp-body">
+  <header class="erp-header">
+    <div class="erp-brand">
+      <img src="images/official-logo.png" alt="Computer Planet Official Logo" style="height:46px; background:#ffffff; padding:2px; border-radius:8px;">
+      <div>
+        <div class="erp-brand-title">SERVICE TICKETS &amp; LEADS CRM</div>
+        <div style="font-size:0.75rem; color:var(--erp-muted);">
+          Inbound Quote Requests &amp; Breakdown Desk · Silchar
+        </div>
+      </div>
+    </div>
+    <div class="erp-user-actions">
+      <a href="erp/" class="erp-btn erp-btn-primary" style="text-decoration:none;">
+        ⚙️ Open Operations ERP
+      </a>
+      <a href="index.html" class="erp-btn" style="background:rgba(255,255,255,0.08); color:#f8fafc; text-decoration:none;" target="_blank">
+        🌐 Public Site ↗
+      </a>
+    </div>
+  </header>
+
+  <div class="erp-container">
+    <div class="panel-header-row" style="margin-top:10px;">
+      <div class="panel-title-area">
+        <h3>Inbound Client Service Tickets &amp; AMC Requests</h3>
+        <p>Real-time intake from homepage quote estimator &amp; emergency breakdown forms.</p>
+      </div>
+      <div class="panel-controls">
+        <select id="statusFilter" class="erp-search-input" style="background:#1e293b;" onchange="renderLeads()">
+          <option value="All">All Statuses</option>
+          <option value="New Inquiry">New Inquiry</option>
+          <option value="Contacted">Contacted / In Discussion</option>
+          <option value="Site Visit Scheduled">Site Visit Scheduled</option>
+          <option value="Converted to AMC">Converted to AMC</option>
+        </select>
+        <button type="button" class="erp-btn erp-btn-primary" onclick="seedSampleLeads()">
+          🔄 Load Demo Tickets
+        </button>
+      </div>
+    </div>
+
+    <div class="data-table-wrapper" style="background:var(--erp-surface); border:1px solid var(--erp-border); border-radius:14px; padding:20px; margin-top:20px;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Ticket Ref &amp; Date</th>
+            <th>Client / Organization</th>
+            <th>Contact Details</th>
+            <th>Service Scope</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTableBody">
+          <!-- Rendered dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const SAMPLE_LEADS = [
+      {
+        id: 'TKT-948120',
+        name: 'Pranab Sen',
+        phone: '+91 94350 42190',
+        email: 'psen@cacharcollege.edu',
+        org: 'Cachar College Computer Center',
+        serviceType: 'Annual Maintenance Contract (AMC)',
+        nodes: '21-50 Systems (Corporate)',
+        message: 'Need full hardware AMC and antivirus management for 40 laboratory desktop computers.',
+        status: 'Site Visit Scheduled',
+        date: '10/09/2026 14:20'
+      },
+      {
+        id: 'TKT-829104',
+        name: 'Debojit Choudhury',
+        phone: '+91 88761 09321',
+        email: 'debojit@silcharhealth.in',
+        org: 'Silchar Care Polyclinic',
+        serviceType: 'Emergency Hardware Repair',
+        nodes: '6-20 Systems',
+        message: 'Billing counter SMPS burned out, power not reaching main server workstation.',
+        status: 'Contacted',
+        date: '11/09/2026 11:15'
+      },
+      {
+        id: 'TKT-710293',
+        name: 'Rajesh Nath',
+        phone: '+91 70028 33180',
+        email: 'nath.traders.silchar@gmail.com',
+        org: 'Nath Hardware Wholesale',
+        serviceType: 'Network & Cabling Setup',
+        nodes: '6-20 Systems',
+        message: 'Need Cat6 cabling and 16-port Gigabit switch installed in 3-storey office building.',
+        status: 'New Inquiry',
+        date: '11/09/2026 16:45'
+      }
+    ];
+
+    function loadLeads() {
+      let leads = [];
+      try {
+        leads = JSON.parse(localStorage.getItem('cp_leads') || '[]');
+      } catch (e) {
+        console.error(e);
+      }
+      if (leads.length === 0) {
+        leads = SAMPLE_LEADS;
+        localStorage.setItem('cp_leads', JSON.stringify(leads));
+      }
+      return leads;
+    }
+
+    function renderLeads() {
+      const leads = loadLeads();
+      const filter = document.getElementById('statusFilter').value;
+      const tbody = document.getElementById('leadsTableBody');
+      const filtered = filter === 'All' ? leads : leads.filter(l => l.status === filter);
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:#94a3b8;">No service tickets found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(lead => `
+        <tr>
+          <td><strong>${lead.id}</strong><br><span style="font-size:0.75rem; color:#94a3b8;">${lead.date}</span></td>
+          <td><strong>${lead.org}</strong><br><span style="font-size:0.75rem; color:#cbd5e1;">Contact: ${lead.name}</span></td>
+          <td>
+            <a href="tel:${lead.phone}" style="color:#38bdf8; font-weight:700;">📞 ${lead.phone}</a><br>
+            <span style="font-size:0.75rem; color:#94a3b8;">${lead.email || 'No email provided'}</span>
+          </td>
+          <td>
+            <span style="color:#f8fafc; font-weight:600;">${lead.serviceType}</span><br>
+            <span style="font-size:0.75rem; color:#fbbf24;">Nodes: ${lead.nodes}</span>
+            <p style="font-size:0.8rem; color:#94a3b8; margin-top:4px; max-width:280px;">"${lead.message}"</p>
+          </td>
+          <td>
+            <span class="badge ${lead.status === 'New Inquiry' ? 'badge-danger' : (lead.status === 'Converted to AMC' ? 'badge-active' : 'badge-warning')}">
+              ${lead.status}
+            </span>
+          </td>
+          <td>
+            <a href="https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(lead.name)}%2C%20this%20is%20M%2FS%20Computer%20Planet%20Silchar%20regarding%20your%20IT%20service%20request%20(${lead.id})." target="_blank" class="btn-action-sm" style="color:#34d399; text-decoration:none;">
+              💬 WA
+            </a>
+            <button class="btn-action-sm" onclick="changeStatus('${lead.id}')">🔄 Status</button>
+            <button class="btn-action-sm danger" onclick="deleteLead('${lead.id}')">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function changeStatus(id) {
+      let leads = loadLeads();
+      const lead = leads.find(l => l.id === id);
+      if (!lead) return;
+      const statuses = ['New Inquiry', 'Contacted', 'Site Visit Scheduled', 'Converted to AMC'];
+      const nextIdx = (statuses.indexOf(lead.status) + 1) % statuses.length;
+      lead.status = statuses[nextIdx];
+      localStorage.setItem('cp_leads', JSON.stringify(leads));
+      renderLeads();
+    }
+
+    function deleteLead(id) {
+      if (confirm('Delete this service ticket?')) {
+        let leads = loadLeads().filter(l => l.id !== id);
+        localStorage.setItem('cp_leads', JSON.stringify(leads));
+        renderLeads();
+      }
+    }
+
+    function seedSampleLeads() {
+      localStorage.setItem('cp_leads', JSON.stringify(SAMPLE_LEADS));
+      renderLeads();
+      alert('Demo service tickets restored!');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderLeads);
+  </script>
+</body>
+</html>

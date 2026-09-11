@@ -1,0 +1,13 @@
+# Netlify Redirects & Rewrites for M/S Computer Planet
+# Backend Operations ERP clean rewrite
+/erp       /erp/index.html   200
+/erp/*     /erp/index.html   200
+
+# Canonical HTTPS and Domain Redirects (apex mscomputerplanet.com -> www.mscomputerplanet.com)
+http://mscomputerplanet.com/*        https://www.mscomputerplanet.com/:splat  301!
+https://mscomputerplanet.com/*       https://www.mscomputerplanet.com/:splat  301!
+http://www.mscomputerplanet.com/*    https://www.mscomputerplanet.com/:splat  301!
+
+# Custom 404 Error Page
+/*         /404.html         404
+

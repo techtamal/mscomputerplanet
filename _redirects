@@ -2,6 +2,8 @@
 # Backend Operations ERP clean rewrite
 /erp       /erp/index.html   200
 /erp/*     /erp/index.html   200
+/simple    /simple.html      200
+/simple-erp /simple.html     200
 
 # Canonical HTTPS and Domain Redirects (apex mscomputerplanet.com -> www.mscomputerplanet.com)
 http://mscomputerplanet.com/*        https://www.mscomputerplanet.com/:splat  301!

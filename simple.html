@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M/S Computer Planet · Simple Portal &amp; Operations ERP</title>
+  <meta name="description" content="Simple, clean layout webpage with integrated Operations ERP desk for M/S Computer Planet IT Sales &amp; Support Silchar.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --accent-light: #dcfce7;
+      --danger: #ef4444;
+      --danger-light: #fee2e2;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 10px;
+      --shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 70px;
+    }
+
+    /* Simple Header */
+    .simple-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand img {
+      height: 48px;
+      width: auto;
+      border-radius: 8px;
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #0f172a;
+    }
+
+    .brand-text h1 span {
+      color: var(--primary);
+    }
+
+    .brand-text p {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-accent { background: #25d366; color: #fff; }
+    .btn-accent:hover { background: #1eb956; }
+    .btn-outline { background: #fff; border-color: var(--border); color: var(--text); }
+    .btn-outline:hover { background: #f1f5f9; }
+
+    /* Navigation Mode Bar */
+    .mode-nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 20px;
+    }
+
+    .mode-nav-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    /* KPI Cards Row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .kpi-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .kpi-icon.blue { background: var(--primary-light); color: var(--primary); }
+    .kpi-icon.green { background: var(--accent-light); color: var(--accent); }
+    .kpi-icon.amber { background: var(--warning-light); color: var(--warning); }
+    .kpi-icon.red { background: var(--danger-light); color: var(--danger); }
+
+    .kpi-details h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .kpi-details p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* Layout Grid (Main Content & Sidebar) */
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Surface Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .badge-blue { background: var(--primary-light); color: var(--primary); }
+    .badge-green { background: var(--accent-light); color: var(--accent); }
+    .badge-amber { background: var(--warning-light); color: var(--warning); }
+    .badge-red { background: var(--danger-light); color: var(--danger); }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Data Tables */
+    .table-responsive {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Action Buttons in Tables */
+    .btn-action {
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .btn-action:hover {
+      background: #f1f5f9;
+    }
+
+    /* PIN Gate Overlay */
+    .pin-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .pin-box {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 360px;
+      width: 100%;
+      padding: 26px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pin-box h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .pin-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .pin-input {
+      font-size: 1.6rem;
+      letter-spacing: 8px;
+      text-align: center;
+      padding: 10px;
+      width: 180px;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      margin: 0 auto 16px;
+      display: block;
+      font-weight: bold;
+    }
+
+    /* Service Grid for Client View */
+    .service-grid-compact {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .service-pill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .service-pill-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      color: #0f172a;
+    }
+
+    .service-pill-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Mobile Sticky Bar */
+    .sticky-action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #0f172a;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 16px;
+      z-index: 99;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .sticky-btn {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 0 4px;
+    }
+
+    .sticky-call { background: #1e293b; border: 1px solid rgba(255,255,255,0.2); }
+    .sticky-wa { background: #25d366; }
+    .sticky-erp { background: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="simple-header">
+    <div class="header-inner">
+      <a href="simple.html" class="brand">
+        <img src="images/official-logo.png" alt="Computer Planet Official Logo">
+        <div class="brand-text">
+          <h1>COMPUTER <span>PLANET</span></h1>
+          <p>Simple Portal · Silchar</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="index.html" class="btn-sm btn-outline">🌐 Full Website</a>
+        <a href="https://wa.me/918638083712?text=Hello%20Computer%20Planet%2C%20I%20need%20quick%20support." target="_blank" class="btn-sm btn-accent">
+          💬 WhatsApp
+        </a>
+        <button type="button" id="erpAuthToggleBtn" class="btn-sm btn-primary" onclick="toggleErpAuth()">
+          🔐 Unlock ERP Desk
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation View Mode Selector -->
+  <div class="mode-nav">
+    <div class="mode-nav-inner">
+      <div class="nav-tabs">
+        <button type="button" class="tab-btn active" id="tabClientBtn" onclick="switchView('client')">
+          🏠 Client View &amp; Log Complaint
+        </button>
+        <button type="button" class="tab-btn" id="tabErpBtn" onclick="switchView('erp')">
+          ⚙️ Operations ERP Desk <span id="erpLockBadge" style="font-size:0.7rem; color:#cbd5e1;">(PIN Protected)</span>
+        </button>
+      </div>
+      <div style="font-size: 0.78rem; color: var(--text-muted);">
+        📍 West Kachudharam, Chincoorie, Silchar · <strong>+91 8638083712</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- KPI Metric Summary Row -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-icon blue">🏛️</div>
+        <div class="kpi-details">
+          <h3 id="statClients">4 Major Clients</h3>
+          <p>PNB (49 Branches), AGBB &amp; Posts</p>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon red">🚨</div>
+        <div class="kpi-details">
+          <h3 id="statOpenComplaints">0 Open</h3>
+          <p>Breakdown Complaints Pending</p>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon green">📦</div>
+        <div class="kpi-details">
+          <h3 id="statInventory">102 Items</h3>
+          <p>SSDs, RAM, Power Supplies</p>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon amber">⚡</div>
+        <div class="kpi-details">
+          <h3>2-4 Hr SLA</h3>
+          <p>Emergency Banking Response</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 1: CLIENT PUBLIC DESK ================= -->
+    <div id="viewClient">
+      
+      <!-- Quick Services Cards -->
+      <div class="service-grid-compact">
+        <div class="service-pill-card">
+          <span class="badge badge-blue">Annual Contract</span>
+          <h4 style="margin-top:8px;">Hardware Maintenance &amp; AMC</h4>
+          <p>Quarterly deep cleaning, thermal repasting, and continuous breakdown coverage for office PCs.</p>
+        </div>
+        <div class="service-pill-card">
+          <span class="badge badge-green">Banking SLA</span>
+          <h4 style="margin-top:8px;">Banking &amp; Corporate IT Support</h4>
+          <p>Dedicated partner for Punjab National Bank (49 branches) and Regional Rural Banks in Cachar.</p>
+        </div>
+        <div class="service-pill-card">
+          <span class="badge badge-amber">Networking</span>
+          <h4 style="margin-top:8px;">Structured Cabling &amp; Switches</h4>
+          <p>Cat6 cabling, Gigabit managed switches, router diagnostics, and server connectivity.</p>
+        </div>
+        <div class="service-pill-card">
+          <span class="badge badge-blue">Spares &amp; Upgrades</span>
+          <h4 style="margin-top:8px;">SSD &amp; RAM Upgrades</h4>
+          <p>Genuine Crucial SSDs, Kingston DDR4 RAM, Corsair SMPS, and instant printer repairs.</p>
+        </div>
+      </div>
+
+      <div class="layout-grid">
+        <!-- Left: Quick Breakdown Form -->
+        <div class="card">
+          <div class="card-title">
+            <span>🚨 Log a Breakdown Complaint / Service Request</span>
+            <span class="badge badge-red">Fast Response</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+            Submit your hardware breakdown or printer issue. Your ticket is registered directly into our Operations ERP desk.
+          </p>
+
+          <form id="publicComplaintForm" onsubmit="handlePublicComplaint(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Client / Organization Name *</label>
+                <input type="text" id="clientOrg" class="form-control" placeholder="e.g. PNB Tarapur, AGBB Sonai, Private Clinic" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Contact Person Name *</label>
+                <input type="text" id="clientPerson" class="form-control" placeholder="e.g. Branch Manager, IT Officer" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Phone / WhatsApp Number *</label>
+                <input type="tel" id="clientPhone" class="form-control" placeholder="+91 94350 XXXXX" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Equipment Affected *</label>
+                <select id="clientEquipment" class="form-control" required>
+                  <option value="">-- Select Hardware --</option>
+                  <option value="Desktop PC (Motherboard / RAM / Boot Failure)">Desktop PC (Motherboard / RAM / Boot Failure)</option>
+                  <option value="Passbook / Laser Printer Failure">Passbook / Laser Printer Failure</option>
+                  <option value="Networking Switch / LAN Down">Networking Switch / LAN Down</option>
+                  <option value="Server / UPS Power Issue">Server / UPS Power Issue</option>
+                  <option value="OS Crash / Data Recovery">OS Crash / Data Recovery</option>
+                  <option value="Other Hardware Peripheral">Other Hardware Peripheral</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Fault Description *</label>
+              <textarea id="clientIssue" class="form-control" rows="3" placeholder="Describe the symptom (e.g. No display, continuous beep, printer roller jam, power fluctuation)" required></textarea>
+            </div>
+
+            <div class="form-row" style="align-items:center;">
+              <div class="form-group">
+                <label class="form-label">SLA Urgency</label>
+                <select id="clientUrgency" class="form-control">
+                  <option value="Critical Banking SLA (2-Hour Window)">Critical Banking SLA (2-Hour Window)</option>
+                  <option value="High Priority (Same Day Response)">High Priority (Same Day Response)</option>
+                  <option value="Standard Corporate (Next Business Day)">Standard Corporate (Next Business Day)</option>
+                </select>
+              </div>
+              <div style="padding-top:14px;">
+                <button type="submit" class="btn-sm btn-primary" style="width:100%; padding:12px; font-size:0.95rem; justify-content:center;">
+                  ⚡ Register Ticket Instantly
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div id="complaintSuccessBox" style="display:none; background:#ecfdf5; border:1px solid #10b981; padding:16px; border-radius:8px; margin-top:16px;">
+            <div style="font-weight:700; color:#065f46; font-size:0.95rem; margin-bottom:4px;">
+              ✅ Complaint Logged Successfully!
+            </div>
+            <p style="font-size:0.85rem; color:#047857; margin-bottom:10px;" id="successTicketMsg"></p>
+            <a id="waForwardBtn" href="#" target="_blank" class="btn-sm btn-accent" style="display:inline-flex;">
+              💬 Ping Duty Engineer on WhatsApp Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Business Credentials & Support Desk -->
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <span>🏛️ Official Credentials</span>
+            </div>
+            <ul style="list-style:none; font-size:0.85rem; line-height:1.8; color:#334155;">
+              <li><strong>Entity:</strong> M/S Computer Planet</li>
+              <li><strong>MSME Reg:</strong> UDYAM-AS-05-0019941</li>
+              <li><strong>GSTIN:</strong> 18ASTPR6755J1ZO</li>
+              <li><strong>PAN:</strong> ASTPR6755J</li>
+              <li><strong>Banking Partner:</strong> Punjab National Bank (49 branches)</li>
+              <li><strong>Phone:</strong> <a href="tel:+918638083712" style="color:var(--primary);">+91 8638083712</a></li>
+              <li><strong>Email:</strong> computerplanetpkd@gmail.com</li>
+            </ul>
+          </div>
+
+          <div class="card" style="background:#0f172a; color:#ffffff;">
+            <h4 style="font-size:1.05rem; margin-bottom:8px; color:#38bdf8;">Need an Official AMC Quotation?</h4>
+            <p style="font-size:0.82rem; color:#94a3b8; margin-bottom:16px; line-height:1.45;">
+              We provide certified preventative maintenance for public and private sector banks across Barak Valley.
+            </p>
+            <a href="https://wa.me/918638083712?text=Hello%20Computer%20Planet%2C%20please%20send%20an%20AMC%20Quotation." target="_blank" class="btn-sm btn-accent" style="width:100%; justify-content:center;">
+              💬 Request Quote on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW 2: OPERATIONS ERP DESK ================= -->
+    <div id="viewErp" style="display: none;">
+      
+      <!-- ERP Subtabs -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-sm btn-outline" id="subtabTicketsBtn" onclick="switchErpSubtab('tickets')" style="background:var(--primary); color:#fff; border-color:var(--primary);">
+            🚨 Live Complaints (<span id="ticketCountBadge">0</span>)
+          </button>
+          <button type="button" class="btn-sm btn-outline" id="subtabClientsBtn" onclick="switchErpSubtab('clients')">
+            🏛️ AMC Clients
+          </button>
+          <button type="button" class="btn-sm btn-outline" id="subtabInventoryBtn" onclick="switchErpSubtab('inventory')">
+            📦 Spares Inventory
+          </button>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-sm btn-outline" onclick="exportSimpleBackup()">
+            ⬇️ Backup JSON
+          </button>
+          <button type="button" class="btn-sm btn-outline" style="color:var(--danger);" onclick="lockErp()">
+            🔒 Lock Desk
+          </button>
+        </div>
+      </div>
+
+      <!-- Subtab: Complaints Desk -->
+      <div id="erpSubtabTickets" class="card">
+        <div class="card-title">
+          <span>Live Breakdown Tickets &amp; Field Engineering Desk</span>
+          <input type="text" id="ticketSearchInput" onkeyup="filterSimpleTickets()" placeholder="🔍 Search tickets..." class="form-control" style="width:220px; padding:6px 10px; font-size:0.8rem;">
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Client / Branch</th>
+                <th>Equipment / Fault</th>
+                <th>Urgency</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="simpleTicketsTbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Subtab: AMC Clients -->
+      <div id="erpSubtabClients" class="card" style="display: none;">
+        <div class="card-title">
+          <span>Active Banking &amp; Corporate AMC Contracts</span>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Client Name</th>
+                <th>Coverage</th>
+                <th>Nodes</th>
+                <th>Expiry Date</th>
+                <th>Contact</th>
+                <th>Direct Action</th>
+              </tr>
+            </thead>
+            <tbody id="simpleClientsTbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Subtab: Inventory -->
+      <div id="erpSubtabInventory" class="card" style="display: none;">
+        <div class="card-title">
+          <span>Hardware Spares &amp; Replacements Inventory</span>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Part Description</th>
+                <th>Category</th>
+                <th>Stock Qty</th>
+                <th>Min Alert</th>
+                <th>Unit Cost</th>
+                <th>Stock Adjust</th>
+              </tr>
+            </thead>
+            <tbody id="simpleInventoryTbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- PIN Modal for ERP Unlock -->
+  <div class="pin-modal" id="pinModal">
+    <div class="pin-box">
+      <div style="font-size:2rem; margin-bottom:8px;">🔒</div>
+      <h3>Enter Staff PIN</h3>
+      <p>Enter 4-digit staff PIN to unlock the integrated Operations ERP desk.</p>
+      
+      <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="••••" autofocus>
+      <div id="pinErrMsg" style="color:var(--danger); font-size:0.8rem; margin-bottom:12px; display:none;">Invalid PIN! Try 1088</div>
+
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button type="button" class="btn-sm btn-outline" onclick="closePinModal()">Cancel</button>
+        <button type="button" class="btn-sm btn-primary" onclick="verifyPin()">Unlock ERP</button>
+      </div>
+
+      <p style="font-size:0.75rem; color:#94a3b8; margin-top:16px;">
+        Default Staff PIN: <strong>1088</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bottom Bar -->
+  <div class="sticky-action-bar">
+    <a href="tel:+918638083712" class="sticky-btn sticky-call">📞 Call Support</a>
+    <a href="https://wa.me/918638083712?text=Hello%20Computer%20Planet%2C%20I%20need%20quick%20support." target="_blank" class="sticky-btn sticky-wa">💬 WhatsApp</a>
+    <a href="javascript:void(0)" onclick="toggleErpAuth()" class="sticky-btn sticky-erp">⚙️ ERP Desk</a>
+  </div>
+
+  <!-- JavaScript Engine -->
+  <script>
+    const STORAGE_KEY = 'cp_erp_data_v1';
+    const MASTER_PIN = '1088';
+    let erpData = {};
+
+    // Initial Load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDatabase();
+      updateKpiCounts();
+      renderTicketsTable();
+      renderClientsTable();
+      renderInventoryTable();
+    });
+
+    // 1. Data Loader & Synchronizer
+    function loadDatabase() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          erpData = JSON.parse(stored);
+        } else {
+          erpData = getSeedData();
+          saveDatabase();
+        }
+      } catch (e) {
+        console.error('Error loading data:', e);
+        erpData = getSeedData();
+      }
+    }
+
+    function saveDatabase() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(erpData));
+      updateKpiCounts();
+    }
+
+    function getSeedData() {
+      return {
+        clients: [
+          { id: 'CL-101', name: 'Punjab National Bank - Silchar Circle', branches: 49, nodes: 245, expiryDate: '2027-08-18', contact: '+91 3842-224501' },
+          { id: 'CL-102', name: 'Assam Gramin Bikash Bank (Silchar RO)', branches: 18, nodes: 95, expiryDate: '2027-01-09', contact: '+91 3842-245120' },
+          { id: 'CL-103', name: 'Department of Posts - Cachar Division', branches: 32, nodes: 64, expiryDate: '2026-10-31', contact: '+91 3842-230104' },
+          { id: 'CL-104', name: 'Barak Valley Diagnostic & Research', branches: 2, nodes: 18, expiryDate: '2027-03-31', contact: '+91 94350 71234' }
+        ],
+        complaints: [
+          {
+            id: 'TK-2026-091',
+            client: 'PNB Tarapur Branch',
+            person: 'Chief Cashier',
+            phone: '+91 94351 22314',
+            equipment: 'Passbook Printer (PB2)',
+            issue: 'Paper feed roller gear slip, continuous paper jam on passbook feed',
+            urgency: 'Critical Banking SLA (2-Hour Window)',
+            status: 'In-Progress',
+            date: '2026-09-12'
+          },
+          {
+            id: 'TK-2026-092',
+            client: 'AGBB Sonai Road Branch',
+            person: 'Branch Manager',
+            phone: '+91 94353 88102',
+            equipment: 'Desktop PC (Dell OptiPlex)',
+            issue: 'SMPS power failure following voltage spike, no display',
+            urgency: 'High Priority (Same Day Response)',
+            status: 'Open',
+            date: '2026-09-14'
+          }
+        ],
+        inventory: [
+          { id: 'INV-01', name: 'Crucial BX500 500GB SSD', category: 'Storage', stock: 18, minAlert: 5, unitCost: 2400 },
+          { id: 'INV-02', name: 'Kingston 8GB DDR4 3200MHz RAM', category: 'Memory', stock: 24, minAlert: 6, unitCost: 1650 },
+          { id: 'INV-03', name: 'Corsair CV550 550W 80+ SMPS', category: 'Power', stock: 9, minAlert: 3, unitCost: 3200 },
+          { id: 'INV-04', name: 'D-Link 24-Port Gigabit Switch', category: 'Network', stock: 4, minAlert: 2, unitCost: 4800 },
+          { id: 'INV-06', name: 'Arctic MX-4 Thermal Paste 4g', category: 'Consumable', stock: 15, minAlert: 4, unitCost: 450 }
+        ]
+      };
+    }
+
+    // 2. View Switching Logic
+    function switchView(view) {
+      const clientView = document.getElementById('viewClient');
+      const erpView = document.getElementById('viewErp');
+      const clientBtn = document.getElementById('tabClientBtn');
+      const erpBtn = document.getElementById('tabErpBtn');
+
+      if (view === 'client') {
+        clientView.style.display = 'block';
+        erpView.style.display = 'none';
+        clientBtn.classList.add('active');
+        erpBtn.classList.remove('active');
+      } else {
+        // ERP view requires auth
+        if (sessionStorage.getItem('cp_simple_erp_auth') === 'true') {
+          clientView.style.display = 'none';
+          erpView.style.display = 'block';
+          clientBtn.classList.remove('active');
+          erpBtn.classList.add('active');
+        } else {
+          openPinModal();
+        }
+      }
+    }
+
+    // 3. PIN Authentication
+    function openPinModal() {
+      document.getElementById('pinModal').style.display = 'flex';
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinErrMsg').style.display = 'none';
+      document.getElementById('pinInput').focus();
+    }
+
+    function closePinModal() {
+      document.getElementById('pinModal').style.display = 'none';
+    }
+
+    function verifyPin() {
+      const pin = document.getElementById('pinInput').value;
+      if (pin === MASTER_PIN) {
+        sessionStorage.setItem('cp_simple_erp_auth', 'true');
+        closePinModal();
+        document.getElementById('erpAuthToggleBtn').textContent = '🔓 Lock ERP';
+        document.getElementById('erpLockBadge').textContent = '(Unlocked)';
+        document.getElementById('erpLockBadge').style.color = '#34d399';
+        switchView('erp');
+      } else {
+        document.getElementById('pinErrMsg').style.display = 'block';
+      }
+    }
+
+    function toggleErpAuth() {
+      if (sessionStorage.getItem('cp_simple_erp_auth') === 'true') {
+        lockErp();
+      } else {
+        openPinModal();
+      }
+    }
+
+    function lockErp() {
+      sessionStorage.removeItem('cp_simple_erp_auth');
+      document.getElementById('erpAuthToggleBtn').textContent = '🔐 Unlock ERP Desk';
+      document.getElementById('erpLockBadge').textContent = '(PIN Protected)';
+      document.getElementById('erpLockBadge').style.color = '#cbd5e1';
+      switchView('client');
+    }
+
+    // 4. ERP Subtabs
+    function switchErpSubtab(tab) {
+      ['Tickets', 'Clients', 'Inventory'].forEach(t => {
+        const pane = document.getElementById('erpSubtab' + t);
+        const btn = document.getElementById('subtab' + t + 'Btn');
+        if (t.toLowerCase() === tab) {
+          pane.style.display = 'block';
+          btn.style.background = 'var(--primary)';
+          btn.style.color = '#fff';
+        } else {
+          pane.style.display = 'none';
+          btn.style.background = 'transparent';
+          btn.style.color = 'var(--text)';
+        }
+      });
+    }
+
+    // 5. Handle Public Breakdown Complaint Submission
+    function handlePublicComplaint(e) {
+      e.preventDefault();
+      const org = document.getElementById('clientOrg').value.trim();
+      const person = document.getElementById('clientPerson').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim();
+      const equip = document.getElementById('clientEquipment').value;
+      const issue = document.getElementById('clientIssue').value.trim();
+      const urgency = document.getElementById('clientUrgency').value;
+
+      const ticketId = 'TK-' + (new Date().getFullYear()) + '-' + Math.floor(100 + Math.random() * 900);
+      const newTicket = {
+        id: ticketId,
+        client: org,
+        person: person,
+        phone: phone,
+        equipment: equip,
+        issue: issue,
+        urgency: urgency,
+        status: 'Open',
+        date: new Date().toISOString().split('T')[0]
+      };
+
+      if (!erpData.complaints) erpData.complaints = [];
+      erpData.complaints.unshift(newTicket);
+      saveDatabase();
+
+      // UI confirmation
+      document.getElementById('publicComplaintForm').reset();
+      const successBox = document.getElementById('complaintSuccessBox');
+      const msg = document.getElementById('successTicketMsg');
+      const waBtn = document.getElementById('waForwardBtn');
+
+      msg.innerHTML = `Ticket Reference: <strong>${ticketId}</strong> for <strong>${org}</strong> has been logged into the Duty Desk.`;
+      const waText = encodeURIComponent(`🚨 New IT Breakdown Ticket (${ticketId}):
+Client: ${org}
+Contact: ${person} (${phone})
+Equipment: ${equip}
+Issue: ${issue}
+Urgency: ${urgency}`);
+      waBtn.href = `https://wa.me/918638083712?text=${waText}`;
+
+      successBox.style.display = 'block';
+      renderTicketsTable();
+    }
+
+    // 6. Render Complaints Table
+    function renderTicketsTable() {
+      const tbody = document.getElementById('simpleTicketsTbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const list = erpData.complaints || [];
+      document.getElementById('ticketCountBadge').textContent = list.length;
+
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px; color:#94a3b8;">No breakdown complaints logged yet.</td></tr>';
+        return;
+      }
+
+      list.forEach(item => {
+        let badgeClass = 'badge-amber';
+        if (item.status === 'Resolved') badgeClass = 'badge-green';
+        if (item.status === 'Open') badgeClass = 'badge-red';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${item.id}</strong><br><small style="color:#64748b;">${item.date || ''}</small></td>
+          <td><strong>${item.client}</strong><br><small style="color:#64748b;">${item.person} (${item.phone})</small></td>
+          <td><span style="font-weight:600;">${item.equipment || 'IT Hardware'}</span><br><small style="color:#64748b;">${item.issue}</small></td>
+          <td><span class="badge ${item.urgency && item.urgency.includes('Critical') ? 'badge-red' : 'badge-blue'}">${item.urgency || 'Standard'}</span></td>
+          <td><span class="badge ${badgeClass}">${item.status}</span></td>
+          <td>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button type="button" class="btn-action" onclick="cycleStatus('${item.id}')">🔄 Status</button>
+              <a href="https://wa.me/${(item.phone || '').replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(item.person || 'Client')}%2C%20regarding%20ticket%20${item.id}%20at%20Computer%20Planet%3A%20Current%20status%20is%20${item.status}." target="_blank" class="btn-action" style="color:#10b981;">💬 WA</a>
+              <button type="button" class="btn-action" onclick="printJobSlip('${item.id}')">🖨️ Print</button>
+              <button type="button" class="btn-action" style="color:#ef4444;" onclick="deleteTicket('${item.id}')">🗑️</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function cycleStatus(id) {
+      const item = erpData.complaints.find(c => c.id === id);
+      if (!item) return;
+      if (item.status === 'Open') item.status = 'In-Progress';
+      else if (item.status === 'In-Progress') item.status = 'Resolved';
+      else item.status = 'Open';
+      saveDatabase();
+      renderTicketsTable();
+    }
+
+    function deleteTicket(id) {
+      if (confirm('Delete ticket ' + id + '?')) {
+        erpData.complaints = erpData.complaints.filter(c => c.id !== id);
+        saveDatabase();
+        renderTicketsTable();
+      }
+    }
+
+    function printJobSlip(id) {
+      const item = erpData.complaints.find(c => c.id === id);
+      if (!item) return;
+      const win = window.open('', '_blank', 'width=780,height=900');
+      win.document.write(`
+        <html><head><title>Field Ticket - ${item.id}</title>
+        <style>
+          body { font-family: sans-serif; padding: 30px; color: #0f172a; line-height: 1.5; }
+          .ticket-header { border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 20px; }
+          .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+          .meta-table td { padding: 8px 12px; border: 1px solid #cbd5e1; }
+          .sign-boxes { display: flex; justify-content: space-between; margin-top: 60px; }
+          .sign-box { border-top: 1px solid #0f172a; width: 220px; text-align: center; padding-top: 8px; font-weight: bold; font-size: 0.85rem; }
+        </style></head><body>
+          <div class="ticket-header">
+            <h2>M/S COMPUTER PLANET (SALES AND SUPPORT)</h2>
+            <p>West Kachudharam, Chincoorie, Silchar — 788007 · Tel: +91 8638083712 · MSME: UDYAM-AS-05-0019941</p>
+            <h3>FIELD SERVICE &amp; BREAKDOWN REPAIR TICKET</h3>
+          </div>
+          <table class="meta-table">
+            <tr><td><strong>Ticket Ref:</strong> ${item.id}</td><td><strong>Date:</strong> ${item.date || ''}</td></tr>
+            <tr><td><strong>Client / Branch:</strong> ${item.client}</td><td><strong>Contact:</strong> ${item.person} (${item.phone})</td></tr>
+            <tr><td><strong>Equipment:</strong> ${item.equipment}</td><td><strong>Urgency:</strong> ${item.urgency}</td></tr>
+            <tr><td colspan="2"><strong>Fault Details:</strong><br>${item.issue}</td></tr>
+            <tr><td colspan="2"><strong>Engineer Observations / Action Taken:</strong><br><br><br></td></tr>
+          </table>
+          <div class="sign-boxes">
+            <div class="sign-box">Attending Field Engineer</div>
+            <div class="sign-box">Client Signature &amp; Seal</div>
+          </div>
+          <script>window.print();<\/script>
+        </body></html>
+      `);
+      win.document.close();
+    }
+
+    function filterSimpleTickets() {
+      const q = document.getElementById('ticketSearchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#simpleTicketsTbody tr');
+      rows.forEach(r => {
+        r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+
+    // 7. Render Clients Table
+    function renderClientsTable() {
+      const tbody = document.getElementById('simpleClientsTbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      (erpData.clients || []).forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${c.name}</strong></td>
+          <td>${c.branches || 1} Branches</td>
+          <td><span class="badge badge-blue">${c.nodes || 0} Nodes</span></td>
+          <td><strong>${c.expiryDate || 'N/A'}</strong></td>
+          <td>${c.contact || ''}</td>
+          <td>
+            <a href="https://wa.me/${(c.contact || '').replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(c.name)}%2C%20greetings%20from%20Computer%20Planet%20IT." target="_blank" class="btn-action" style="color:#10b981;">💬 WhatsApp</a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 8. Render Inventory Table
+    function renderInventoryTable() {
+      const tbody = document.getElementById('simpleInventoryTbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      (erpData.inventory || []).forEach(inv => {
+        const isLow = inv.stock <= inv.minAlert;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${inv.name}</strong></td>
+          <td>${inv.category}</td>
+          <td>
+            <span class="badge ${isLow ? 'badge-red' : 'badge-green'}" style="font-size:0.85rem;">
+              ${inv.stock} Units ${isLow ? '⚠️ LOW' : ''}
+            </span>
+          </td>
+          <td>${inv.minAlert} Units</td>
+          <td>₹${inv.unitCost}</td>
+          <td>
+            <div style="display:flex; gap:4px;">
+              <button type="button" class="btn-action" onclick="adjustStock('${inv.id}', 1)">+1</button>
+              <button type="button" class="btn-action" onclick="adjustStock('${inv.id}', -1)">-1</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function adjustStock(id, delta) {
+      const item = erpData.inventory.find(i => i.id === id);
+      if (!item) return;
+      item.stock = Math.max(0, item.stock + delta);
+      saveDatabase();
+      renderInventoryTable();
+    }
+
+    // 9. Update KPI Summary Numbers
+    function updateKpiCounts() {
+      const clients = erpData.clients ? erpData.clients.length : 0;
+      const openComps = (erpData.complaints || []).filter(c => c.status !== 'Resolved').length;
+      let totalParts = 0;
+      (erpData.inventory || []).forEach(i => totalParts += (i.stock || 0));
+
+      const statClients = document.getElementById('statClients');
+      const statOpenComplaints = document.getElementById('statOpenComplaints');
+      const statInventory = document.getElementById('statInventory');
+
+      if (statClients) statClients.textContent = clients + ' Major Clients';
+      if (statOpenComplaints) statOpenComplaints.textContent = openComps + ' Open';
+      if (statInventory) statInventory.textContent = totalParts + ' Items';
+    }
+
+    // 10. Backup Database
+    function exportSimpleBackup() {
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(erpData, null, 2));
+      const a = document.createElement('a');
+      a.setAttribute('href', dataStr);
+      a.setAttribute('download', 'computer_planet_db_' + new Date().toISOString().split('T')[0] + '.json');
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  </script>
+</body>
+</html>

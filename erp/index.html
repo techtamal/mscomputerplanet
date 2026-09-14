@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M/S Computer Planet · Operations ERP &amp; Back-Office System</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/erp.css">
+</head>
+<body class="erp-body">
+
+  <!-- ================= PIN AUTHENTICATION GATE ================= -->
+  <div class="erp-gate-overlay" id="erpLoginGate">
+    <div class="erp-gate-box">
+      <img src="/images/official-logo.png" alt="Computer Planet Official Logo" class="erp-gate-logo" style="height:76px; background:#ffffff; padding:4px; border-radius:12px; margin-bottom:16px;">
+      <h2>Operations ERP Portal</h2>
+      <p class="subtitle">Secure Staff &amp; Field Engineer Management System</p>
+
+      <div class="pin-display">
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+      </div>
+
+      <div class="numpad-grid">
+        <button type="button" class="numpad-btn" data-val="1">1</button>
+        <button type="button" class="numpad-btn" data-val="2">2</button>
+        <button type="button" class="numpad-btn" data-val="3">3</button>
+        <button type="button" class="numpad-btn" data-val="4">4</button>
+        <button type="button" class="numpad-btn" data-val="5">5</button>
+        <button type="button" class="numpad-btn" data-val="6">6</button>
+        <button type="button" class="numpad-btn" data-val="7">7</button>
+        <button type="button" class="numpad-btn" data-val="8">8</button>
+        <button type="button" class="numpad-btn" data-val="9">9</button>
+        <button type="button" class="numpad-btn" data-val="clear" style="font-size:1rem; color:#f87171;">CLEAR</button>
+        <button type="button" class="numpad-btn" data-val="0">0</button>
+        <button type="button" class="numpad-btn" data-val="back" style="font-size:1.1rem; color:#fbbf24;">⌫</button>
+      </div>
+
+      <div class="gate-error-msg" id="gateErrorMsg"></div>
+      <p style="font-size: 0.76rem; color: #64748b; margin-top: 14px;">
+        Default Staff PIN: <strong>1088</strong> · Confidential Internal System
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ERP DASHBOARD APPLICATION ================= -->
+  <div id="erpApp" style="display: none; width: 100%;">
+    <!-- Top Header -->
+    <header class="erp-header">
+      <div class="erp-brand">
+        <img src="/images/official-logo.png" alt="Computer Planet Official Logo" style="height:46px; background:#ffffff; padding:2px; border-radius:8px;">
+        <div>
+          <div class="erp-brand-title">M/S COMPUTER PLANET</div>
+          <div style="font-size:0.75rem; color:var(--erp-muted);">
+            Operations Control · West Kachudharam, Silchar
+          </div>
+        </div>
+        <span class="erp-brand-badge">MSME Verified</span>
+      </div>
+
+      <div class="erp-user-actions">
+        <a href="/leads-admin.html" class="erp-btn erp-btn-primary" style="text-decoration:none;">
+          📥 Service Leads CRM
+        </a>
+        <a href="/" class="erp-btn" style="background:rgba(255,255,255,0.08); color:#f8fafc; text-decoration:none;" target="_blank">
+          🌐 Public Site ↗
+        </a>
+        <button type="button" class="erp-btn erp-btn-lock" id="btnLockSession">
+          🔒 Lock Session
+        </button>
+      </div>
+    </header>
+
+    <div class="erp-container">
+      <!-- KPI Metric Ribbon -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon blue">🏛️</div>
+          <div>
+            <div class="kpi-label">Active AMC Clients</div>
+            <div class="kpi-val" id="kpiActiveClients">4 (422 Nodes)</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon yellow">📦</div>
+          <div>
+            <div class="kpi-label">Inventory Spares Value</div>
+            <div class="kpi-val" id="kpiInventoryVal">₹2,84,500</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon green">💰</div>
+          <div>
+            <div class="kpi-label">Net Operating Balance</div>
+            <div class="kpi-val" id="kpiNetProfit">₹1,02,850</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon purple">👷</div>
+          <div>
+            <div class="kpi-label">Field Technicians</div>
+            <div class="kpi-val" id="kpiTechnicians">4 Engineers</div>
+          </div>
+        </div>
+      
+        <div class="kpi-card">
+          <div class="kpi-icon red" style="background:rgba(239,68,68,0.15); color:#f87171;">🚨</div>
+          <div>
+            <div class="kpi-label">Active Breakdown SLA</div>
+            <div class="kpi-val" id="kpiOpenComplaints" style="color:#f87171;">2 Pending</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Module Tabs -->
+      <div class="module-tabs">
+        <button type="button" class="module-tab-btn active" data-target="panelClients">
+          🏛️ Clients &amp; AMC Contracts
+        </button>
+        <button type="button" class="module-tab-btn" data-target="panelInventory">
+          📦 Spare Parts &amp; Assets
+        </button>
+        <button type="button" class="module-tab-btn" data-target="panelHRMS">
+          👷 HRMS &amp; Field Engineers
+        </button>
+        <button type="button" class="module-tab-btn" data-target="panelLedger">
+          📑 Financial Ledger &amp; Billing
+        </button>
+        <button type="button" class="module-tab-btn" data-target="panelPackages">
+          🏷️ AMC Rate Packages
+        </button>
+        <button type="button" class="module-tab-btn" data-target="panelComplaints">
+          🚨 Complaints &amp; Service Log
+        </button>
+        <button type="button" class="module-tab-btn" data-target="panelBackup">
+          💾 Data Backup / Restore
+        </button>
+      </div>
+
+      <!-- ================= 1. CLIENTS & AMC PANEL ================= -->
+      <div class="module-panel active" id="panelClients">
+        <div class="panel-header-row">
+          <div class="panel-title-area">
+            <h3>Clientele &amp; Annual Maintenance Contracts</h3>
+            <p>Track banking branches, government entities, renewal deadlines, and service logs.</p>
+          </div>
+          <div class="panel-controls">
+            <input type="text" id="clientSearchInput" class="erp-search-input" placeholder="Search Client / Work Order...">
+            <button type="button" class="erp-btn erp-btn-primary" onclick="openModal('modalAddClient')">
+              ➕ Add AMC Client
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Client Name &amp; Work Order Ref</th>
+                <th>Coverage Scope</th>
+                <th>Status</th>
+                <th>Expiry Date</th>
+                <th>Annual Contract Value</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clientsTableBody">
+              <!-- Rendered dynamically by erp.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= 2. INVENTORY PANEL ================= -->
+      <div class="module-panel" id="panelInventory">
+        <div class="panel-header-row">
+          <div class="panel-title-area">
+            <h3>Hardware Assets &amp; Spare Parts Inventory</h3>
+            <p>Maintain critical replacement stock: SSDs, RAM, SMPS, networking switches, and cables.</p>
+          </div>
+          <div class="panel-controls">
+            <input type="text" id="inventorySearchInput" class="erp-search-input" placeholder="Search Part / Category...">
+            <button type="button" class="erp-btn erp-btn-primary" onclick="openModal('modalAddInventory')">
+              ➕ Add Spare Part
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Item &amp; Category</th>
+                <th>In Stock (Units)</th>
+                <th>Cost Price</th>
+                <th>Selling / Billing Price</th>
+                <th>Stock Adjustment</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+              <!-- Rendered dynamically by erp.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= 3. HRMS & FIELD ENGINEERS PANEL ================= -->
+      <div class="module-panel" id="panelHRMS">
+        <div class="panel-header-row">
+          <div class="panel-title-area">
+            <h3>HRMS &amp; Field Technician Directory</h3>
+            <p>Track resident banking engineers, mobile technicians, designations, and territory assignments.</p>
+          </div>
+          <div class="panel-controls">
+            <button type="button" class="erp-btn erp-btn-primary" onclick="openModal('modalAddEmployee')">
+              ➕ Add Technician
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Technician Name &amp; Designation</th>
+                <th>Contact Phone</th>
+                <th>Assigned Bank / Region</th>
+                <th>Duty Status</th>
+                <th>Monthly Compensation</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="hrmsTableBody">
+              <!-- Rendered dynamically by erp.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= 4. FINANCIAL LEDGER PANEL ================= -->
+      <div class="module-panel" id="panelLedger">
+        <div class="panel-header-row">
+          <div class="panel-title-area">
+            <h3>Financial Ledger &amp; Cashflow Ledger</h3>
+            <p>Track AMC billing receipts, spare parts sales, transit allowances, and operating costs.</p>
+          </div>
+          <div class="panel-controls">
+            <button type="button" class="erp-btn erp-btn-primary" onclick="openModal('modalAddLedger')">
+              ➕ Add Transaction
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Transaction Description</th>
+                <th>Amount (₹)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ledgerTableBody">
+              <!-- Rendered dynamically by erp.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= 5. AMC PACKAGES PANEL ================= -->
+      <div class="module-panel" id="panelPackages">
+        <div class="panel-header-row">
+          <div class="panel-title-area">
+            <h3>AMC Rate Card &amp; Service Package Catalog</h3>
+            <p>Configure official pricing tiers, SLA turnarounds, and preventive maintenance scopes.</p>
+          </div>
+          <div class="panel-controls">
+            <button type="button" class="erp-btn erp-btn-primary" onclick="openModal('modalAddPackage')">
+              ➕ Add New Package
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Package Name</th>
+                <th>Tier</th>
+                <th>Annual Base Rate</th>
+                <th>Included Features &amp; SLA</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="packagesTableBody">
+              <!-- Rendered dynamically by erp.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      
+      <!-- ================= 6. CLIENT COMPLAINTS & BREAKDOWN LOG PANEL ================= -->
+      <div class="module-panel" id="panelComplaints">
+        <div class="panel-header-row">
+          <div class="panel-title-area">
+            <h3>Client Complaint &amp; Breakdown Log System</h3>
+            <p>Live tracking of hardware breakdown tickets, banking SLA escalations, and engineer dispatch.</p>
+          </div>
+          <div class="panel-controls">
+            <input type="text" id="complaintSearchInput" class="erp-search-input" placeholder="Search Ticket / Client / Issue..." oninput="window.erp.renderComplaints(this.value)">
+            <select id="complaintPriorityFilter" class="erp-search-input" style="width:140px; background:#1e293b;" onchange="window.erp.renderComplaints()">
+              <option value="All">All Priorities</option>
+              <option value="Emergency">Emergency</option>
+              <option value="High">High</option>
+              <option value="Normal">Normal</option>
+            </select>
+            <select id="complaintStatusFilter" class="erp-search-input" style="width:130px; background:#1e293b;" onchange="window.erp.renderComplaints()">
+              <option value="All">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="Dispatched">Dispatched</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Closed">Closed</option>
+            </select>
+            <button type="button" class="erp-btn erp-btn-primary" onclick="openModal('modalAddComplaint')">
+              ➕ Log New Complaint
+            </button>
+          </div>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ticket ID &amp; Time</th>
+                <th>Client / Branch Location</th>
+                <th>Equipment &amp; Reported Issue</th>
+                <th>Priority</th>
+                <th>Assigned Field Tech</th>
+                <th>SLA Status</th>
+                <th>Action Controls</th>
+              </tr>
+            </thead>
+            <tbody id="complaintsTableBody">
+              <!-- Rendered dynamically by erp.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= 7. DATA BACKUP & RESTORE PANEL ================= -->
+      <div class="module-panel" id="panelBackup">
+        <div class="panel-header-row">
+          <div class="panel-title-area">
+            <h3>Data Management, Backup &amp; Disaster Recovery</h3>
+            <p>Safeguard all operational data locally or transfer between devices seamlessly.</p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 800px; margin-top: 10px;">
+          <div style="background:rgba(15,23,42,0.6); padding:24px; border-radius:12px; border:1px solid var(--erp-border);">
+            <h4>💾 Export Full Database Backup</h4>
+            <p style="font-size:0.85rem; color:var(--erp-muted); margin: 8px 0 16px;">
+              Download a JSON file containing all clients, inventory, HRMS staff, financial ledgers, and rate cards.
+            </p>
+            <button type="button" class="erp-btn erp-btn-primary" onclick="exportDataBackup()">
+              ⬇️ Export JSON Backup
+            </button>
+          </div>
+
+          <div style="background:rgba(15,23,42,0.6); padding:24px; border-radius:12px; border:1px solid var(--erp-border);">
+            <h4>📥 Restore Database from JSON</h4>
+            <p style="font-size:0.85rem; color:var(--erp-muted); margin: 8px 0 16px;">
+              Upload a previously exported JSON backup file to instantly restore all records.
+            </p>
+            <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="importDataBackup(event)">
+            <button type="button" class="erp-btn" style="background:#10b981; color:#fff;" onclick="document.getElementById('importFileInput').click()">
+              ⬆️ Select File &amp; Restore
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD AMC CLIENT ================= -->
+  <div class="modal-overlay" id="modalAddClient">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color:#fff;">Add New AMC Client Contract</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModal('modalAddClient')">✕</button>
+      </div>
+      <form id="formAddClient" onsubmit="handleFormAddClient(event)">
+        <div class="form-group">
+          <label class="form-label">Client / Organization Name *</label>
+          <input type="text" name="name" class="form-control" placeholder="e.g. Bank Circle Office / College" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Contact Person</label>
+            <input type="text" name="contactPerson" class="form-control" placeholder="Branch Manager / IT Officer">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" name="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Branches / Sites</label>
+            <input type="number" name="branches" class="form-control" value="1" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Total Computer Nodes</label>
+            <input type="number" name="nodes" class="form-control" value="10" min="1" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Work Order / P.O. Ref</label>
+            <input type="text" name="workOrderRef" class="form-control" placeholder="e.g. WO/2026/041" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Annual Value (₹)</label>
+            <input type="number" name="annualValue" class="form-control" value="45000" min="0" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Contract Expiry Date</label>
+            <input type="date" name="expiryDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">AMC Package Tier</label>
+            <select name="tier" class="form-control" style="background:#0f172a;">
+              <option value="Bronze Essential Care">Bronze Essential Care</option>
+              <option value="Silver Corporate Standard">Silver Corporate Standard</option>
+              <option value="Gold Enterprise (Banking SLA)">Gold Enterprise (Banking SLA)</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="erp-btn erp-btn-primary" style="width:100%; padding:12px; margin-top:14px;">
+          💾 Save Client Contract
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD INVENTORY ITEM ================= -->
+  <div class="modal-overlay" id="modalAddInventory">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color:#fff;">Add Spare Part to Inventory</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModal('modalAddInventory')">✕</button>
+      </div>
+      <form id="formAddInventory" onsubmit="handleFormAddInventory(event)">
+        <div class="form-group">
+          <label class="form-label">Item / Component Name *</label>
+          <input type="text" name="name" class="form-control" placeholder="e.g. Kingston 16GB DDR5 RAM" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-control" style="background:#0f172a;">
+              <option value="Storage">Storage (SSD/HDD)</option>
+              <option value="Memory">Memory (RAM)</option>
+              <option value="Power Supplies">Power Supplies (SMPS)</option>
+              <option value="Networking">Networking (Switches/Routers)</option>
+              <option value="Cabling">Cabling &amp; Racks</option>
+              <option value="Peripherals">Peripherals (Keyboards/Mouse)</option>
+              <option value="Consumables">Consumables (Thermal Paste/Toner)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Initial Quantity *</label>
+            <input type="number" name="stock" class="form-control" value="5" min="1" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Unit Cost Price (₹) *</label>
+            <input type="number" name="unitCost" class="form-control" value="2000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Selling / Billing Price (₹) *</label>
+            <input type="number" name="sellPrice" class="form-control" value="2600" min="0" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Low Stock Alert Level</label>
+            <input type="number" name="minAlert" class="form-control" value="3" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Supplier Name</label>
+            <input type="text" name="supplier" class="form-control" placeholder="Distributor Name">
+          </div>
+        </div>
+        <button type="submit" class="erp-btn erp-btn-primary" style="width:100%; padding:12px; margin-top:14px;">
+          💾 Add Spare Part
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD TECHNICIAN ================= -->
+  <div class="modal-overlay" id="modalAddEmployee">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color:#fff;">Register Field Engineer / Technician</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModal('modalAddEmployee')">✕</button>
+      </div>
+      <form id="formAddEmployee" onsubmit="handleFormAddEmployee(event)">
+        <div class="form-group">
+          <label class="form-label">Technician Full Name *</label>
+          <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Role / Designation *</label>
+            <input type="text" name="role" class="form-control" placeholder="e.g. Resident Banking Engineer" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Phone *</label>
+            <input type="tel" name="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Monthly Salary / Base (₹) *</label>
+            <input type="number" name="salary" class="form-control" value="22000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Initial Status</label>
+            <select name="status" class="form-control" style="background:#0f172a;">
+              <option value="Active">Active (In Lab)</option>
+              <option value="On-Field">On-Field (At Client Site)</option>
+              <option value="Leave">On Leave</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assigned Clients / Branches</label>
+          <input type="text" name="assignedClients" class="form-control" placeholder="e.g. PNB Silchar Circle Branches / Cachar Rural">
+        </div>
+        <button type="submit" class="erp-btn erp-btn-primary" style="width:100%; padding:12px; margin-top:14px;">
+          💾 Save Technician Profile
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD LEDGER TRANSACTION ================= -->
+  <div class="modal-overlay" id="modalAddLedger">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color:#fff;">Record Ledger Transaction</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModal('modalAddLedger')">✕</button>
+      </div>
+      <form id="formAddLedger" onsubmit="handleFormAddLedger(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Transaction Type *</label>
+            <select name="type" class="form-control" style="background:#0f172a;">
+              <option value="Income">Income (+ Receivable)</option>
+              <option value="Expense">Expense (- Outflow)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <input type="text" name="category" class="form-control" placeholder="e.g. AMC Payment / Spare Parts" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description / Remarks *</label>
+          <input type="text" name="desc" class="form-control" placeholder="Details of transaction" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Amount (₹) *</label>
+            <input type="number" name="amount" class="form-control" value="5000" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Invoice / Voucher Ref</label>
+            <input type="text" name="ref" class="form-control" placeholder="e.g. INV-2026-095" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" name="date" class="form-control" required>
+        </div>
+        <button type="submit" class="erp-btn erp-btn-primary" style="width:100%; padding:12px; margin-top:14px;">
+          💾 Save Transaction
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADD AMC PACKAGE ================= -->
+  <div class="modal-overlay" id="modalAddPackage">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color:#fff;">Create AMC Package Tier</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModal('modalAddPackage')">✕</button>
+      </div>
+      <form id="formAddPackage" onsubmit="handleFormAddPackage(event)">
+        <div class="form-group">
+          <label class="form-label">Package Name *</label>
+          <input type="text" name="name" class="form-control" placeholder="e.g. Platinum 24/7 Mission Critical" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tier Badge</label>
+            <input type="text" name="tier" class="form-control" placeholder="e.g. Platinum" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Annual Price Per Node (₹) *</label>
+            <input type="number" name="annualPricePerNode" class="form-control" value="9500" min="1000" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Billing Cycle</label>
+          <input type="text" name="billingCycle" class="form-control" value="Quarterly / Annually">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Included Features (Comma-separated)</label>
+          <textarea name="features" class="form-control" rows="3" placeholder="e.g. 24/7 on-call support, Hot-swap spare parts, Free thermal repasting"></textarea>
+        </div>
+        <button type="submit" class="erp-btn erp-btn-primary" style="width:100%; padding:12px; margin-top:14px;">
+          💾 Save AMC Package
+        </button>
+      </form>
+    </div>
+  </div>
+
+  
+  <!-- ================= MODAL: LOG NEW COMPLAINT ================= -->
+  <div class="modal-overlay" id="modalAddComplaint">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color:#fff;">Log Client Breakdown Complaint</h3>
+        <button type="button" class="modal-close-btn" onclick="closeModal('modalAddComplaint')">✕</button>
+      </div>
+      <form id="formAddComplaint" onsubmit="handleFormAddComplaint(event)">
+        <div class="form-group">
+          <label class="form-label">Client / Bank Branch Name *</label>
+          <input type="text" name="clientName" class="form-control" placeholder="e.g. Punjab National Bank - Sonai Branch" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Contact Person *</label>
+            <input type="text" name="contactPerson" class="form-control" placeholder="Branch Manager / Officer" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" name="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Device / Equipment Type *</label>
+            <input type="text" name="deviceType" class="form-control" placeholder="e.g. Desktop PC / Passbook Printer / Switch" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">SLA Priority Level *</label>
+            <select name="priority" class="form-control" style="background:#0f172a;">
+              <option value="Emergency (Banking SLA)">Emergency (Banking 2-Hour SLA)</option>
+              <option value="High (4-Hour SLA)">High (4-Hour Corporate SLA)</option>
+              <option value="Normal (Next Day)">Normal (Next Business Day)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fault / Problem Description *</label>
+          <textarea name="issue" class="form-control" rows="3" placeholder="Exact symptoms: e.g. blue screen, no power, printer paper jam, network loop..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Initial Assigned Engineer</label>
+          <select name="assignedEngineer" class="form-control" style="background:#0f172a;">
+            <option value="Subhash Sharma">Subhash Sharma (Senior Banking Lead)</option>
+            <option value="Bikram Roy">Bikram Roy (Field Desktop Support)</option>
+            <option value="Anirban Das">Anirban Das (Chip-Level &amp; Printer Specialist)</option>
+            <option value="Manoj Paul">Manoj Paul (Network &amp; Cabling)</option>
+          </select>
+        </div>
+        <button type="submit" class="erp-btn erp-btn-primary" style="width:100%; padding:12px; margin-top:14px;">
+          🚨 Log &amp; Dispatch Field Ticket
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Scripts & Form Handlers -->
+  <script>
+    function openModal(id) {
+      document.getElementById(id)?.classList.add('active');
+      // Set default dates if applicable
+      const dateInputs = document.querySelectorAll('#' + id + ' input[type="date"]');
+      dateInputs.forEach(d => {
+        if (!d.value) d.value = new Date().toISOString().slice(0, 10);
+      });
+    }
+
+    function closeModal(id) {
+      document.getElementById(id)?.classList.remove('active');
+    }
+
+    // Close on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+        }
+      });
+    });
+
+    // Form Submissions
+    function handleFormAddClient(e) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const newClient = {
+        id: 'CL-' + Math.floor(100 + Math.random() * 900),
+        name: fd.get('name'),
+        contactPerson: fd.get('contactPerson'),
+        phone: fd.get('phone'),
+        branches: parseInt(fd.get('branches')),
+        nodes: parseInt(fd.get('nodes')),
+        workOrderRef: fd.get('workOrderRef'),
+        annualValue: parseInt(fd.get('annualValue')),
+        expiryDate: fd.get('expiryDate'),
+        tier: fd.get('tier'),
+        status: 'Active',
+        lastVisit: new Date().toISOString().slice(0, 10)
+      };
+      window.erp.data.clients.unshift(newClient);
+      window.erp.saveData(window.erp.data);
+      window.erp.renderAll();
+      closeModal('modalAddClient');
+      e.target.reset();
+      alert('Client AMC Contract added successfully!');
+    }
+
+    function handleFormAddInventory(e) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const newItem = {
+        id: 'INV-' + Math.floor(10 + Math.random() * 90),
+        name: fd.get('name'),
+        category: fd.get('category'),
+        stock: parseInt(fd.get('stock')),
+        unitCost: parseInt(fd.get('unitCost')),
+        sellPrice: parseInt(fd.get('sellPrice')),
+        minAlert: parseInt(fd.get('minAlert')),
+        supplier: fd.get('supplier') || 'Local Regional Dist.'
+      };
+      window.erp.data.inventory.unshift(newItem);
+      window.erp.saveData(window.erp.data);
+      window.erp.renderAll();
+      closeModal('modalAddInventory');
+      e.target.reset();
+      alert('Spare part added to inventory!');
+    }
+
+    function handleFormAddEmployee(e) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const newEmp = {
+        id: 'EMP-' + Math.floor(10 + Math.random() * 90),
+        name: fd.get('name'),
+        role: fd.get('role'),
+        phone: fd.get('phone'),
+        salary: parseInt(fd.get('salary')),
+        status: fd.get('status'),
+        assignedClients: fd.get('assignedClients') || 'General Field Support',
+        joinDate: new Date().toISOString().slice(0, 10)
+      };
+      window.erp.data.hrms.unshift(newEmp);
+      window.erp.saveData(window.erp.data);
+      window.erp.renderAll();
+      closeModal('modalAddEmployee');
+      e.target.reset();
+      alert('Field technician added to HRMS!');
+    }
+
+    function handleFormAddLedger(e) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const newTx = {
+        id: 'TX-' + Math.floor(100 + Math.random() * 900),
+        date: fd.get('date'),
+        type: fd.get('type'),
+        category: fd.get('category'),
+        desc: fd.get('desc'),
+        amount: parseInt(fd.get('amount')),
+        ref: fd.get('ref')
+      };
+      window.erp.data.ledger.unshift(newTx);
+      window.erp.saveData(window.erp.data);
+      window.erp.renderAll();
+      closeModal('modalAddLedger');
+      e.target.reset();
+      alert('Transaction recorded in ledger!');
+    }
+
+    
+    function handleFormAddComplaint(e) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const newComp = {
+        id: 'CMP-' + new Date().getFullYear() + '-' + Math.floor(100 + Math.random() * 900),
+        date: new Date().toISOString().slice(0, 10) + ' ' + new Date().toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}),
+        clientName: fd.get('clientName'),
+        contactPerson: fd.get('contactPerson'),
+        phone: fd.get('phone'),
+        deviceType: fd.get('deviceType'),
+        issue: fd.get('issue'),
+        priority: fd.get('priority'),
+        assignedEngineer: fd.get('assignedEngineer'),
+        status: 'Dispatched',
+        resolutionNotes: 'Initial dispatch: Engineer notified.',
+        closedAt: null
+      };
+      if (!window.erp.data.complaints) window.erp.data.complaints = [];
+      window.erp.data.complaints.unshift(newComp);
+      window.erp.saveData(window.erp.data);
+      window.erp.renderComplaints();
+      window.erp.renderKPIs();
+      closeModal('modalAddComplaint');
+      e.target.reset();
+      alert(`✅ Complaint Registered Successfully!\nTicket Reference: ${newComp.id}\nAssigned Engineer: ${newComp.assignedEngineer}`);
+    }
+
+    function handleFormAddPackage(e) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const newPkg = {
+        id: 'PKG-' + Math.floor(10 + Math.random() * 90),
+        name: fd.get('name'),
+        tier: fd.get('tier'),
+        annualPricePerNode: parseInt(fd.get('annualPricePerNode')),
+        billingCycle: fd.get('billingCycle'),
+        features: fd.get('features')
+      };
+      window.erp.data.packages.unshift(newPkg);
+      window.erp.saveData(window.erp.data);
+      window.erp.renderPackages();
+      closeModal('modalAddPackage');
+      e.target.reset();
+      alert('AMC Package created successfully!');
+    }
+
+    // Backup & Restore
+    function exportDataBackup() {
+      const jsonStr = JSON.stringify(window.erp.data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `computer_planet_erp_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importDataBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed.clients && parsed.inventory) {
+            window.erp.saveData(parsed);
+            window.erp.renderAll();
+            alert('Database restored successfully!');
+          } else {
+            alert('Invalid backup file format!');
+          }
+        } catch (err) {
+          alert('Error parsing JSON file: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+  </script>
+
+  <!-- ERP Engine Script -->
+  <script src="/js/erp.js"></script>
+</body>
+</html>

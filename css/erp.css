@@ -1,0 +1,510 @@
+/* ==========================================================================
+   COMPUTER PLANET - OPERATIONAL ERP DASHBOARD STYLESHEET
+   Private Back Office System (/erp)
+   ========================================================================== */
+
+:root {
+  --erp-bg: #0b0f19;
+  --erp-surface: #111827;
+  --erp-card: #1e293b;
+  --erp-card-hover: #273549;
+  --erp-border: rgba(255, 255, 255, 0.08);
+  --erp-border-focus: #38bdf8;
+  --erp-primary: #0284c7;
+  --erp-primary-hover: #0369a1;
+  --erp-accent: #10b981;
+  --erp-warning: #f59e0b;
+  --erp-danger: #ef4444;
+  --erp-text: #f8fafc;
+  --erp-muted: #94a3b8;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+body.erp-body {
+  background: var(--erp-bg);
+  color: var(--erp-text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= PIN / Authentication Gate ================= */
+.erp-gate-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #1e293b 0%, #0b0f19 100%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.erp-gate-box {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 440px;
+  padding: 42px 36px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(2, 132, 199, 0.2);
+}
+
+.erp-gate-logo {
+  height: 52px;
+  margin: 0 auto 20px;
+}
+
+.erp-gate-box h2 {
+  font-size: 1.45rem;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.erp-gate-box p.subtitle {
+  font-size: 0.88rem;
+  color: var(--erp-muted);
+  margin-bottom: 26px;
+}
+
+.pin-display {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #64748b;
+  transition: all 0.2s ease;
+}
+
+.pin-dot.filled {
+  background: var(--erp-accent);
+  border-color: var(--erp-accent);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+.numpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 280px;
+  margin: 0 auto 20px;
+}
+
+.numpad-btn {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  height: 56px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.numpad-btn:hover {
+  background: rgba(2, 132, 199, 0.25);
+  border-color: var(--erp-primary);
+  transform: scale(1.04);
+}
+
+.numpad-btn:active {
+  transform: scale(0.96);
+}
+
+.gate-error-msg {
+  color: var(--erp-danger);
+  font-size: 0.85rem;
+  min-height: 20px;
+  margin-top: 10px;
+}
+
+/* ================= Top ERP Navigation ================= */
+.erp-header {
+  background: #0f172a;
+  border-bottom: 1px solid var(--erp-border);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.erp-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.erp-brand img {
+  height: 38px;
+}
+
+.erp-brand-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.erp-brand-badge {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--erp-accent);
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.erp-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.erp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.erp-btn-lock {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #f87171;
+}
+
+.erp-btn-lock:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.erp-btn-primary {
+  background: var(--erp-primary);
+  color: #ffffff;
+}
+
+.erp-btn-primary:hover {
+  background: var(--erp-primary-hover);
+}
+
+/* ================= Dashboard Ribbon / KPI Cards ================= */
+.erp-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100%;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.kpi-card {
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: all 0.2s ease;
+}
+
+.kpi-card:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-2px);
+}
+
+.kpi-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.kpi-icon.blue { background: rgba(2, 132, 199, 0.15); color: #38bdf8; }
+.kpi-icon.green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.kpi-icon.yellow { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.kpi-icon.purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+.kpi-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--erp-muted);
+  margin-bottom: 4px;
+}
+
+.kpi-val {
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ================= Module Tabs ================= */
+.module-tabs {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid var(--erp-border);
+  margin-bottom: 24px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.module-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--erp-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.module-tab-btn:hover {
+  color: #ffffff;
+}
+
+.module-tab-btn.active {
+  color: var(--erp-primary-hover);
+  color: #38bdf8;
+  background: rgba(2, 132, 199, 0.1);
+}
+
+.module-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #38bdf8;
+  border-radius: 3px 3px 0 0;
+}
+
+/* ================= Module Panels & Data Tables ================= */
+.module-panel {
+  display: none;
+  background: var(--erp-surface);
+  border: 1px solid var(--erp-border);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.module-panel.active {
+  display: block;
+}
+
+.panel-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.panel-title-area h3 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.panel-title-area p {
+  font-size: 0.85rem;
+  color: var(--erp-muted);
+}
+
+.panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.erp-search-input {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--erp-border);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  width: 220px;
+}
+
+.erp-search-input:focus {
+  outline: none;
+  border-color: var(--erp-border-focus);
+}
+
+.data-table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  text-align: left;
+}
+
+.data-table th {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--erp-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  letter-spacing: 0.5px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--erp-border);
+}
+
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.data-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 99px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.badge-active { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.badge-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.badge-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+.badge-info { background: rgba(2, 132, 199, 0.15); color: #38bdf8; }
+
+/* Action Buttons inside tables */
+.btn-action-sm {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.btn-action-sm:hover {
+  background: rgba(2, 132, 199, 0.2);
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+
+.btn-action-sm.danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: #f87171;
+}
+
+/* ================= Modal Forms ================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-content {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 580px;
+  padding: 32px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--erp-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  color: #ffffff;
+}
+
+/* ================= Print Styles for Invoices ================= */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printableInvoice, #printableInvoice * {
+    visibility: visible;
+  }
+  #printableInvoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #ffffff;
+    color: #000000;
+  }
+}
